@@ -38,6 +38,13 @@ const div_style: CSSProperties = {
 const handleRequest = frames(async (ctx) => {
   const message = ctx.message
 
+  const { data: dataTest, error: errorTest } = await supabase
+    .from("space_claims")
+    .select();
+
+  console.log({dataTest})
+  console.log({errorTest})
+
   // If no message, show home page
   if (!message)
     return {
@@ -72,6 +79,8 @@ const handleRequest = frames(async (ctx) => {
     }
   }
 
+  console.log(message.requesterVerifiedAddresses)
+
   if (!message.requesterVerifiedAddresses.length) {
     return {
       image: (
@@ -89,7 +98,7 @@ const handleRequest = frames(async (ctx) => {
 
   // Find user last claim
   const { data, error } = await supabase
-    .from("fox_claims")
+    .from("space_claims")
     .select("claimed_at", { count: "exact" })
     .eq("fid", message?.requesterFid)
     .order("claimed_at", { ascending: false })
@@ -137,11 +146,13 @@ const handleRequest = frames(async (ctx) => {
   }
 
   // Save claim history
-  const save = await supabase.from("fox_claims").insert({
+  const save = await supabase.from("space_claims").insert({
     fid: message?.requesterFid,
-    f_address: message?.requesterCustodyAddress,
-    eth_address: userAddress,
+    farcaster_address: message?.requesterCustodyAddress,
+    ethereum_address: userAddress,
   })
+
+  console.log({save})
 
   return {
     image:

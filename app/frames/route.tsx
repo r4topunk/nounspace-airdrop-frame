@@ -154,7 +154,7 @@ const handleRequest = frames(async (ctx) => {
     buttons: [
       <Button
         action="link"
-        target={`https://optimistic.etherscan.io/tx/${receipt}`}
+        target={`https://basescan.org/tx/${receipt}`}
       >
         See on OP Scan
       </Button>,

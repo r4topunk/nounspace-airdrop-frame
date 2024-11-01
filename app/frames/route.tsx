@@ -1,5 +1,5 @@
 import { ABI } from "@/lib/abi"
-import { FOX_CONTRACT } from "@/lib/constants"
+import { AIRDROP_TOKEN_ADDRESS } from "@/lib/constants"
 import { supabase } from "@/lib/supabase"
 import { checkInteractionTime } from "@/lib/utils"
 import { account, publicClient, walletClient } from "@/lib/web3-client"
@@ -97,26 +97,26 @@ const handleRequest = frames(async (ctx) => {
   }
 
   // Find user last claim
-  const { data, error } = await supabase
-    .from("space_claims")
-    .select("claimed_at", { count: "exact" })
-    .eq("fid", message?.requesterFid)
-    .order("claimed_at", { ascending: false })
-    .limit(1)
-  const lastInteractionTime = checkInteractionTime(data)
+  // const { data, error } = await supabase
+  //   .from("space_claims")
+  //   .select("claimed_at", { count: "exact" })
+  //   .eq("fid", message?.requesterFid)
+  //   .order("claimed_at", { ascending: false })
+  //   .limit(1)
+  // const lastInteractionTime = checkInteractionTime(data)
 
-  // If find claims or has not passed 24 hours since last claim
-  if (lastInteractionTime && !lastInteractionTime.has24HoursPassed) {
-    const buttonText = `Try again in ${lastInteractionTime.formattedTime}`
-    return {
-      image: "https://github.com/r4topunk/shapeshift-faucet-frame/blob/main/public/wait.png?raw=true",
-      buttons: [
-        <Button action="post" target={{ query: { state: true } }}>
-          {buttonText}
-        </Button>,
-      ],
-    }
-  }
+  // // If find claims or has not passed 24 hours since last claim
+  // if (lastInteractionTime && !lastInteractionTime.has24HoursPassed) {
+  //   const buttonText = `Try again in ${lastInteractionTime.formattedTime}`
+  //   return {
+  //     image: "https://github.com/r4topunk/shapeshift-faucet-frame/blob/main/public/wait.png?raw=true",
+  //     buttons: [
+  //       <Button action="post" target={{ query: { state: true } }}>
+  //         {buttonText}
+  //       </Button>,
+  //     ],
+  //   }
+  // }
 
   const userAddress = message.requesterVerifiedAddresses[0] as `0x${string}`
 
@@ -125,10 +125,10 @@ const handleRequest = frames(async (ctx) => {
   try {
     const { request } = await publicClient.simulateContract({
       account,
-      address: FOX_CONTRACT,
+      address: AIRDROP_TOKEN_ADDRESS,
       abi: ABI,
       functionName: "transfer",
-      args: [userAddress, parseUnits("0.000333", 18)],
+      args: [userAddress, parseUnits("0.333", 18)],
     })
     receipt = await walletClient.writeContract(request)
   } catch (e: any) {

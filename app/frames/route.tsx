@@ -11,7 +11,13 @@ import { parseUnits } from "viem"
 const frames = createFrames({
   basePath: "/frames",
   middleware: [
-    farcasterHubContext(),
+    farcasterHubContext({
+      ...(process.env.NODE_ENV === "production"
+        ? {}
+        : {
+            hubHttpUrl: "http://localhost:3010/hub",
+          }),
+    }),
   ],
 })
 

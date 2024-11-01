@@ -11,14 +11,7 @@ import { parseUnits } from "viem"
 const frames = createFrames({
   basePath: "/frames",
   middleware: [
-    farcasterHubContext({
-      // remove if you aren't using @frames.js/debugger or you just don't want to use the debugger hub
-      ...(process.env.NODE_ENV === "production"
-        ? {}
-        : {
-            hubHttpUrl: "http://localhost:3010/hub",
-          }),
-    }),
+    farcasterHubContext(),
   ],
 })
 
@@ -37,21 +30,16 @@ const div_style: CSSProperties = {
 
 const handleRequest = frames(async (ctx) => {
   const message = ctx.message
+  console.log({message})
 
-  const { data: dataTest, error: errorTest } = await supabase
-    .from("space_claims")
-    .select();
-
-  console.log({dataTest})
-  console.log({errorTest})
-
+  
   // If no message, show home page
   if (!message)
     return {
-      image:
-        "https://github.com/r4topunk/shapeshift-faucet-frame/blob/main/public/claim.gif?raw=true",
-      buttons: [
-        <Button action="post" target={{ query: { state: true } }}>
+  image:
+  "https://github.com/r4topunk/shapeshift-faucet-frame/blob/main/public/claim.gif?raw=true",
+  buttons: [
+    <Button action="post" target={{ query: { state: true } }}>
           🚀 Claim $SPACE
         </Button>,
       ],

@@ -1,8 +1,6 @@
+import { WEBSITE_URL } from "@/lib/constants"
 import { fetchMetadata } from "frames.js/next"
 import { Metadata } from "next"
-
-const WEBSITE_URL =
-  process.env.WEBSITE_URL || "http://localhost:3000"
 
 export async function generateMetadata(): Promise<Metadata> {
   return {

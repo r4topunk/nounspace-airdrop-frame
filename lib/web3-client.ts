@@ -1,11 +1,12 @@
 import { createPublicClient, createWalletClient, http } from "viem"
 import { privateKeyToAccount } from "viem/accounts"
-import { base, optimism } from "viem/chains"
+import { base } from "viem/chains"
+import { WALLET_PRIVATE_KEY } from "./constants"
 
 export const chain = base
 
 export const account = privateKeyToAccount(
-  process.env.WALLET_PRIVATE_KEY as `0x${string}`
+  WALLET_PRIVATE_KEY
 )
 
 export const walletClient = createWalletClient({

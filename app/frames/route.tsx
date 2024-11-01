@@ -45,7 +45,7 @@ const handleRequest = frames(async (ctx) => {
         "https://github.com/r4topunk/shapeshift-faucet-frame/blob/main/public/claim.gif?raw=true",
       buttons: [
         <Button action="post" target={{ query: { state: true } }}>
-          🦊 Claim Fox
+          🚀 Claim $SPACE
         </Button>,
       ],
     }

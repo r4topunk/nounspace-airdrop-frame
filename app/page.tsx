@@ -2,7 +2,7 @@ import { fetchMetadata } from "frames.js/next"
 import { Metadata } from "next"
 
 const WEBSITE_URL =
-  process.env.FOX_WEBSITE_URL || "http://localhost:3000"
+  process.env.WEBSITE_URL || "http://localhost:3000"
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -29,14 +29,14 @@ export default async function Home() {
         gap: "24px",
       }}
     >
-      <img
+      {/* <img
         src={WEBSITE_URL + "/FOX_Icon_white.svg"}
         width={"64px"}
         height={"64px"}
         color="green"
-      />
-      <span style={{ fontSize: "24px" }}>Farcaster Faucet Frame</span>
-      <a
+      /> */}
+      <span style={{ fontSize: "24px" }}>Nounspace Faucet Frame</span>
+      {/* <a
         href="https://warpcast.com/r4topunk/0x12d169c7"
         style={{
           textDecoration: "none",
@@ -50,7 +50,7 @@ export default async function Home() {
         }}
       >
         View Cast
-      </a>
+      </a> */}
     </div>
   )
 }

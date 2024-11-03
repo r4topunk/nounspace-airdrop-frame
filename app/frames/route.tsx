@@ -1,5 +1,5 @@
 import { ABI } from "@/lib/abi"
-import { AIRDROP_TOKEN_ADDRESS } from "@/lib/constants"
+import { AIRDROP_TOKEN_ADDRESS, NEYNAR_API_KEY } from "@/lib/constants"
 import { supabase } from "@/lib/supabase"
 import { checkInteractionTime } from "@/lib/utils"
 import { account, publicClient, walletClient } from "@/lib/web3-client"
@@ -13,9 +13,20 @@ const frames = createFrames({
   middleware: [
     farcasterHubContext({
       ...(process.env.NODE_ENV === "production"
-        ? {}
+        ? {
+          hubRequestOptions: {
+            headers: {
+              api_key: NEYNAR_API_KEY,
+            }
+          }
+        }
         : {
             hubHttpUrl: "http://localhost:3010/hub",
+            hubRequestOptions: {
+              headers: {
+                api_key: NEYNAR_API_KEY,
+              }
+            }
           }),
     }),
   ],

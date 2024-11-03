@@ -167,7 +167,7 @@ const handleRequest = frames(async (ctx) => {
         action="link"
         target={`https://basescan.org/tx/${receipt}`}
       >
-        See on OP Scan
+        See on Basescan
       </Button>,
     ],
   }
